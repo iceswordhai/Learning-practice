@@ -1,0 +1,15 @@
+#!/usr/bin/python3
+#author hai
+#creattime 2019-09-09
+
+import os
+
+new_file = "out.ts"
+f = open(new_file,'wb+')
+for i in range(0,226):
+    filename = u"%d.ts" %i
+    print(filename)
+    for line in open(filename,'rb'):
+        f.write(line)
+    f.flush()
+f.close()
