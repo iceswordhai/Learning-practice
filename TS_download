@@ -1,0 +1,35 @@
+1、下载M3U8/TS
+#!/bin/python
+#author hai
+#time 2019-09-04
+#!/bin/python
+#author hai
+#time 2019-09-04
+#lasttime 2019-09-06
+#实现功能：读取某几个节目集的MD5值,拼接M3U8地址并下载TS文件
+
+import requests
+import urllib.request
+import os
+import json
+
+files = open('/root/1111.txt', "r")
+tat = files.readlines()
+for i in tat:
+    tata = eval(i)  #转成列表
+    showname = tata["showName"]
+    for fd in range(1,len(tata)):
+        fid = tata["sid_" + str(fd)]["fid"][0]  #匹配字典的值再取列表中地址
+        m3u8_url = ('http://42.62.117.54:8181/m3u8/' + fid + ".m3u8")
+        path = (showname + str(fd))
+        if not os.path.exists(path): #判断目录是否存在并创建
+            os.mkdir(path)
+        f1 = open(path+"/"+fid,"a")  #打开目录下的文件并追加写入
+        f1.write(requests.get(m3u8_url).text) #下载M3U8
+        f2 = open(path+'/'+fid,'r')
+        tat2 = f2.readlines()
+        for ts_line in tat2:
+            if '/segview' in ts_line: #读取M3U8里 带这个字符的字符串
+                ts_url = ('http://42.62.117.54:8181' + ts_line)  #拼接TS地址
+                #下载TS(URL地址,保存路径加提前TS的文件名称)
+                urllib.request.urlretrieve(ts_url,path +'/' + ts_line.split("-",2)[1] + ".ts")
