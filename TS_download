@@ -20,7 +20,7 @@ for i in tat:
     showname = tata["showName"]
     for fd in range(1,len(tata)):
         fid = tata["sid_" + str(fd)]["fid"][0]  #匹配字典的值再取列表中地址
-        m3u8_url = ('http://42.62.117.54:8181/m3u8/' + fid + ".m3u8")
+        m3u8_url = ('http://xxx.xxx.xxx.xx:8181/m3u8/' + fid + ".m3u8")
         path = (showname + str(fd))
         if not os.path.exists(path): #判断目录是否存在并创建
             os.mkdir(path)
@@ -30,6 +30,6 @@ for i in tat:
         tat2 = f2.readlines()
         for ts_line in tat2:
             if '/segview' in ts_line: #读取M3U8里 带这个字符的字符串
-                ts_url = ('http://42.62.117.54:8181' + ts_line)  #拼接TS地址
+                ts_url = ('http://xx.xx.xxx.5xx:8181' + ts_line)  #拼接TS地址
                 #下载TS(URL地址,保存路径加提前TS的文件名称)
                 urllib.request.urlretrieve(ts_url,path +'/' + ts_line.split("-",2)[1] + ".ts")
